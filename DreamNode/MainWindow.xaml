@@ -1,0 +1,94 @@
+﻿<Window x:Class="DreamNode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DreamNode"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="485" Width="800"
+        KeyDown="Window_KeyDown" Closing="Window_Closing">
+    <Grid>
+        <TabControl SelectionChanged="TabControl_SelectionChanged" x:Name="tabMenu">
+            <TabItem Header="List">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="9*" />
+                    </Grid.RowDefinitions>
+
+                    <DataGrid x:Name="datagrid1" Grid.Column="0" Grid.Row="1"
+                              AutoGenerateColumns="False" SelectionChanged="datagrid1_SelectionChanged"
+                              SelectionMode="Single" SelectionUnit="FullRow" CanUserAddRows="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="id"  Binding="{Binding id}"/>
+                            <DataGridTextColumn Header="description" Binding="{Binding desc}" />
+                            <DataGridTextColumn Header="size" Binding="{Binding size}" />
+                            <DataGridTextColumn Header="count" Binding="{Binding totalPassageCount}" />
+                            <!--<DataGridComboBoxColumn Header="Order Status"  SelectedItemBinding="{Binding Status}" ItemsSource="{Binding Source={StaticResource myEnum}}" />-->
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <DataGrid x:Name="datagrid2" Grid.Column="1" Grid.Row="1"
+                              AutoGenerateColumns="False" CanUserAddRows="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Dir"  Binding="{Binding type}"/>
+                            <DataGridTextColumn Header="link" Binding="{Binding linkId}" />
+                            <DataGridTextColumn Header="description" Binding="{Binding description}" />
+                            <!--<DataGridComboBoxColumn Header="Order Status"  SelectedItemBinding="{Binding Status}" ItemsSource="{Binding Source={StaticResource myEnum}}" />-->
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <TextBox Grid.Row="0" Grid.Column="0"/>
+
+                </Grid>
+            </TabItem>
+            <TabItem Header="Register">
+                <Grid x:Name="gridRegister" Background="#FFE5E5E5" Focusable="True">
+                    <Label Content="Passages:" HorizontalAlignment="Left" Height="40" Margin="22,139,0,0" VerticalAlignment="Top" Width="100" FontSize="20"/>
+                    <Label x:Name="PoolSize" Content="" HorizontalAlignment="Left" Height="40" Margin="327,0,0,0" VerticalAlignment="Top" Width="70" FontSize="20" HorizontalContentAlignment="Right"/>
+                    <Label x:Name="PoolPassagesOverview" Content="" HorizontalAlignment="Left" Height="252" Margin="10,179,0,0" VerticalAlignment="Top" Width="182" FontSize="16"/>
+                    <Grid HorizontalAlignment="Left" Height="129" Margin="22,10,0,0" VerticalAlignment="Top" Width="170">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="1*" />
+                        </Grid.RowDefinitions>
+                        <Button Click="NewPassageClick" Name = "newPassage7"></Button>
+                        <Button Click="NewPassageClick" Name = "newPassage8" Grid.Column="1">North</Button>
+                        <Button Click="NewPassageClick" Name = "newPassage9" Grid.Column="2">Above</Button>
+                        <Button Click="NewPassageClick" Name = "newPassage4" Grid.Row="1">West</Button>
+                        <Button Click="NewPassageClick" Name = "newPassage5" Grid.Column="1" Grid.Row="1"></Button>
+                        <Button Click="NewPassageClick" Name = "newPassage6" Grid.Column="2" Grid.Row="1">East</Button>
+                        <Button Click="NewPassageClick" Name = "newPassage1" Grid.Row="2">Plus</Button>
+                        <Button Click="NewPassageClick" Name = "newPassage2" Grid.Column="1" Grid.Row="2">South</Button>
+                        <Button Click="NewPassageClick" Name = "newPassage3" Grid.Column="2" Grid.Row="2">Below</Button>
+                    </Grid>
+                    <RadioButton x:Name="radioAddSimple" Content="Simple" HorizontalAlignment="Left" Margin="211,94,0,0" VerticalAlignment="Top" IsChecked="True"/>
+                    <RadioButton x:Name="radioGoTo" Content="Go to" HorizontalAlignment="Left" Margin="212,114,0,0" VerticalAlignment="Top" Height="15" Width="52"/>
+                    <Label x:Name="status" Content="" HorizontalAlignment="Left" Margin="357,338,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="PoolDescription" HorizontalAlignment="Left" Margin="487,97,0,121" TextWrapping="Wrap" Width="297" TextChanged="PoolDescription_TextChanged"/>
+                    <TextBox x:Name="PoolId" HorizontalAlignment="Left" Height="40" Margin="214,34,0,0" VerticalAlignment="Top" Width="243" FontSize="20" TextChanged="PoolId_TextChanged"/>
+                    <TextBox x:Name="multiInput" HorizontalAlignment="Left" Margin="487,20,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="295" Height="26"/>
+                    <Button x:Name="btnTeleport" Content="Teleport" HorizontalAlignment="Left" Margin="564,50,0,0" VerticalAlignment="Top" Height="26" Width="70" Click="btnTeleport_Click"/>
+                    <Button x:Name="btnFusion" Content="Fusion" HorizontalAlignment="Left" Margin="638,50,0,0" VerticalAlignment="Top" Height="26" Width="70" Click="btnFusion_Click"/>
+                    <Button x:Name="btnSave" Content="Save" Margin="0,0,12,10" Click="btnSave_Click" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="60"/>
+                    <Button x:Name="btnAddView" Content="Add view" HorizontalAlignment="Left" Margin="712,50,0,0" VerticalAlignment="Top" Height="26" Width="70" Click="btnAddView_Click"/>
+                    <Label Content="Description:" HorizontalAlignment="Left" Height="29" Margin="481,75,0,0" VerticalAlignment="Top" Width="80"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="View">
+                <Border x:Name="border" ClipToBounds="True">
+                    <Image x:Name="graphImage" MouseLeftButtonDown="graphImage_MouseLeftButtonDown" MouseLeftButtonUp="graphImage_MouseLeftButtonUp" MouseMove="graphImage_MouseMove" MouseWheel="graphImage_MouseWheel"/>
+                </Border>
+            </TabItem>
+        </TabControl>
+
+    </Grid>
+</Window>
