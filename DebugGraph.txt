@@ -3231,7 +3231,7 @@
     },
     {
       "id": "Room 180",
-      "desc": null,
+      "desc": "",
       "size": 0,
       "passages": [
         {

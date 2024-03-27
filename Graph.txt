@@ -1,5 +1,5 @@
 {
-  "poolNumber": 272,
+  "poolNumber": 285,
   "views": [
     {
       "1": "Tree middle",
@@ -88,6 +88,10 @@
     {
       "1": "Room 270",
       "2": "Pijurro"
+    },
+    {
+      "1": "Room 256",
+      "2": "One weird window"
     }
   ],
   "pools": [
@@ -3503,7 +3507,7 @@
         },
         {
           "type": 0,
-          "link": "null",
+          "link": "Room 278",
           "description": null
         }
       ]
@@ -4167,7 +4171,7 @@
         },
         {
           "type": 3,
-          "link": "null",
+          "link": "Green pooltoy",
           "description": null
         },
         {
@@ -4243,7 +4247,7 @@
         },
         {
           "type": 3,
-          "link": "null",
+          "link": "Room 283",
           "description": null
         }
       ]
@@ -4471,6 +4475,130 @@
         {
           "type": 1,
           "link": "Room 28",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Green pooltoy",
+      "desc": "",
+      "size": 1,
+      "passages": [
+        {
+          "type": 2,
+          "link": "3 Hooks",
+          "description": null
+        },
+        {
+          "type": 0,
+          "link": "Room 283",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Room 278",
+      "desc": null,
+      "size": 1,
+      "passages": [
+        {
+          "type": 1,
+          "link": "Coliseum",
+          "description": null
+        },
+        {
+          "type": 4,
+          "link": "Room 279",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Room 279",
+      "desc": null,
+      "size": 0,
+      "passages": [
+        {
+          "type": 5,
+          "link": "Room 278",
+          "description": null
+        },
+        {
+          "type": 0,
+          "link": "Open corridor",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Open corridor",
+      "desc": null,
+      "size": 1,
+      "passages": [
+        {
+          "type": 1,
+          "link": "Room 279",
+          "description": null
+        },
+        {
+          "type": 0,
+          "link": "Room 281",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Room 281",
+      "desc": null,
+      "size": 0,
+      "passages": [
+        {
+          "type": 1,
+          "link": "Open corridor",
+          "description": null
+        },
+        {
+          "type": 3,
+          "link": "Quadstairs 4",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Quadstairs 4",
+      "desc": "",
+      "size": 1,
+      "passages": [
+        {
+          "type": 2,
+          "link": "Room 281",
+          "description": null
+        },
+        {
+          "type": 1,
+          "link": "Room 283",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Room 283",
+      "desc": "",
+      "size": 1,
+      "passages": [
+        {
+          "type": 0,
+          "link": "Quadstairs 4",
+          "description": null
+        },
+        {
+          "type": 2,
+          "link": "Room 254",
+          "description": null
+        },
+        {
+          "type": 1,
+          "link": "Green pooltoy",
           "description": null
         }
       ]

@@ -55,7 +55,7 @@ namespace DreamNode
             InitializeComponent();
 
             datagrid1.ItemsSource = engine.pools;
-
+            multiInput.ItemsSource = engine.pools.Select(p => p.id);
 
             Refresh();
         }
@@ -208,7 +208,7 @@ shape = ""box""
             if (File.Exists(imageFile))
                 File.Delete(imageFile);
 
-            engine.Save(saveFile);
+            //engine.Save(saveFile);
 
             Process process = new Process();
             ProcessStartInfo startInfo = new ProcessStartInfo();
@@ -226,7 +226,18 @@ shape = ""box""
 
         }
 
-        private void NumInput(Key x)
+        private void resetDataGrid()
+        {
+            var view = CollectionViewSource.GetDefaultView(datagrid1.ItemsSource);
+            view?.SortDescriptions.Clear();
+
+            foreach (var column in datagrid1.Columns)
+            {
+                column.SortDirection = null;
+            }
+        }
+
+        private void NumInput(Key x, bool addPassage = false)
         {
 
 
@@ -255,12 +266,12 @@ shape = ""box""
 
                 lookBack = false;
             }
-            else if (this.radioAddSimple.IsChecked == true)
+            else if (addPassage)
             {
 
                 engine.AddEmptyPassage(pt);
             }
-            else if (this.radioGoTo.IsChecked == true)
+            else
             {
                 Passage togo;
                 var passages = active.GetPassages();
@@ -319,16 +330,11 @@ shape = ""box""
             {
                 return;
             }
-
-
-
+            
+            
             if (x >= Key.NumPad0 && x <= Key.NumPad9)
-                NumInput(e.Key);
-            else if (x == Key.S)
-                radioAddSimple.IsChecked = true;
-            else if (x == Key.G)
-                radioGoTo.IsChecked = true;
-            if (x == Key.Add)
+                NumInput(e.Key, e.KeyboardDevice.IsKeyDown(Key.LeftCtrl));
+            else if (x == Key.Add)
                 active.size = Graph.PoolSize.Big;
             else if (x == Key.Subtract)
                 active.size = Graph.PoolSize.Small;
@@ -345,6 +351,10 @@ shape = ""box""
             {
                 PoolDescription.Focus();
                 PoolDescription.SelectAll();
+            }
+            else if (x == Key.F4)
+            {
+                multiInput.Focus();
             }
 
             Refresh();
@@ -453,6 +463,9 @@ shape = ""box""
                 datagrid1.Items.Refresh();
                 datagrid2.Items.Refresh();
 
+                resetDataGrid();
+                
+
                 datagrid1.SelectedItem = active;
             }
             else if ((string)t.Header == "Register")
@@ -463,15 +476,30 @@ shape = ""box""
             }
             else if ((string)t.Header == "View")
             {
-                GenerateView();
+                Task.Run(LoadImage);
+            }
+        }
+
+        private async Task LoadImage()
+        {
+            ReloadStatus.Dispatcher.Invoke(() =>
+            {
+                ReloadStatus.Visibility = Visibility.Visible;
+            });
+
+            GenerateView();
+
+            graphImage.Dispatcher.Invoke(() =>  {
                 var image = new BitmapImage();
                 image.BeginInit();
                 image.CacheOption = BitmapCacheOption.OnLoad;
                 image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
                 image.UriSource = new Uri(imageFile);
-                image.EndInit();
+                image.EndInit(); 
                 graphImage.Source = image;
-            }
+                ReloadStatus.Visibility = Visibility.Hidden;
+                Refresh();
+            });
         }
 
         private void graphImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -516,7 +544,20 @@ shape = ""box""
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
+            this.IsEnabled = false;
             engine.Save(saveFile);
+            this.IsEnabled = true;
+
+        }
+
+        private void searchInput_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            
+        }
+
+        private void btnReset_Click(object sender, RoutedEventArgs e)
+        {
+            resetDataGrid();
         }
 
     } 
