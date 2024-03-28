@@ -70,6 +70,7 @@ namespace DreamNode
             status.Content = lookBack ? "lookback" : goToSubmenu.HasValue ? "Go To" : "";
 
             datagrid1.Items.Refresh();
+            multiInput.ItemsSource = engine.pools.Select(p => p.id);
 
 
             if (goToSubmenu.HasValue)
@@ -131,6 +132,26 @@ Plus: {Decorate(PassageType.Plus)}";
 
         private void GenerateView()
         {
+
+            void writePool(StringBuilder sb, Pool p)
+            {
+                sb.Append("\"");
+                sb.Append(p.id);
+                sb.Append($"\"[width={Math.Pow(2, (int)p.size)}, height={Math.Pow(2, (int)p.size) * 0.7}]");
+                sb.AppendLine();
+            }
+
+            void writePassage(StringBuilder sb, Pool p, Passage a)
+            {
+                var q = p.id;
+                var w = a.type.ToString().First();
+                var e = a.linkId;
+                var r = a.link.passages.Find(x => x.link == p).type.ToString().First();
+
+                sb.AppendLine($"\"{q}\" -- \"{e}\" [taillabel = \"{w}\", headlabel = \"{r}\"]");
+                //sb.AppendLine($"\"{q}\":{w} -- \"{e}\":{r}");
+            }
+
             StringBuilder sb = new();
 
             sb.Append(@" // DreamNode
@@ -147,19 +168,31 @@ shape = ""box""
 
             sb.AppendLine();
             sb.AppendLine("//pools");
-            foreach (var p in engine.pools)
+
+            HashSet<Pool> hashPool = new();
+
+            Pool eval = engine.pools.First();
+            Pool old = null;
+
+            bool shouldStop = false;
+
+            while(!shouldStop)
             {
-                sb.Append("\"");
-                sb.Append(p.id);
-                sb.Append($"\"[width={Math.Pow(2, (int)p.size)}, height={Math.Pow(2, (int)p.size) * 0.7}]");
-                sb.AppendLine();
+                if (hashPool.Contains(eval))
+                {
+                    eval = old;
+                    continue;
+                }
+
+
+                writePool(sb, eval);
             }
 
             //Random rng = new Random();
 
             //var shuffledpools = engine.pools.OrderBy(_ => rng.Next()).ToList();
 
-            HashSet<Tuple<Pool, Pool>> hash = new();
+            HashSet<Tuple<Pool, Pool>> hashPassage = new();
 
             sb.AppendLine();
             sb.AppendLine("//passages");
@@ -178,18 +211,12 @@ shape = ""box""
                     }
                         
 
-                    if (hash.Any(t => t.Item1 == p && t.Item2 == a.link || t.Item2 == p && t.Item1 == a.link))
+                    if (hashPassage.Any(t => t.Item1 == p && t.Item2 == a.link || t.Item2 == p && t.Item1 == a.link))
                         continue;
                     else
                     {
-                        var q = p.id;
-                        var w = a.type.ToString().First();
-                        var e = a.linkId;
-                        var r = a.link.passages.Find(x => x.link == p).type.ToString().First();
-
-                        sb.AppendLine($"\"{q}\" -- \"{e}\" [taillabel = \"{w}\", headlabel = \"{r}\"]");
-                        //sb.AppendLine($"\"{q}\":{w} -- \"{e}\":{r}");
-                        hash.Add(new Tuple<Pool, Pool>(p, a.link));
+                        writePassage(sb, p, a);
+                        hashPassage.Add(new Tuple<Pool, Pool>(p, a.link));
                     }
                 }
             }
@@ -464,11 +491,10 @@ shape = ""box""
 
             if ((string)t.Header == "List")
             {
+                resetDataGrid();
+
                 datagrid1.Items.Refresh();
                 datagrid2.Items.Refresh();
-
-                resetDataGrid();
-                
 
                 datagrid1.SelectedItem = active;
             }
