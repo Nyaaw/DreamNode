@@ -12,32 +12,42 @@
             <TabItem Header="List">
                 <Grid Background="#FFE5E5E5">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*" />
-                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*" />
                         <RowDefinition Height="9*" />
                     </Grid.RowDefinitions>
+                    <GridSplitter Grid.Column="0" 
+                        Grid.RowSpan="2" 
+                        HorizontalAlignment="Right" 
+                        VerticalAlignment="Stretch" 
+                        ShowsPreview="true"
+                        Panel.ZIndex="1"
+                        Width="3" Background="#FF848484"/>
 
                     <DataGrid x:Name="datagrid1" Grid.Column="0" Grid.Row="1"
                               AutoGenerateColumns="False" SelectionChanged="datagrid1_SelectionChanged"
                               SelectionMode="Single" SelectionUnit="FullRow" CanUserAddRows="False">
+                        <DataGrid.Resources>
+                            <Style TargetType="DataGridRow">
+                                <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick"/>
+                            </Style>
+                        </DataGrid.Resources>
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="id"  Binding="{Binding id}"/>
+                            <DataGridTextColumn Header="id"  Binding="{Binding id}" IsReadOnly="True"/>
                             <DataGridTextColumn Header="description" Binding="{Binding desc}" />
                             <DataGridTextColumn Header="size" Binding="{Binding size}" />
-                            <DataGridTextColumn Header="count" Binding="{Binding totalPassageCount}" />
-                            <!--<DataGridComboBoxColumn Header="Order Status"  SelectedItemBinding="{Binding Status}" ItemsSource="{Binding Source={StaticResource myEnum}}" />-->
+                            <DataGridTextColumn Header="count" Binding="{Binding totalPassageCount}" IsReadOnly="True"/>
                         </DataGrid.Columns>
                     </DataGrid>
                     <DataGrid x:Name="datagrid2" Grid.Column="1" Grid.Row="1"
                               AutoGenerateColumns="False" CanUserAddRows="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Dir"  Binding="{Binding type}"/>
-                            <DataGridTextColumn Header="link" Binding="{Binding linkId}" />
+                            <DataGridTextColumn Header="link" Binding="{Binding linkId}" IsReadOnly="True"/>
                             <DataGridTextColumn Header="description" Binding="{Binding description}" />
-                            <!--<DataGridComboBoxColumn Header="Order Status"  SelectedItemBinding="{Binding Status}" ItemsSource="{Binding Source={StaticResource myEnum}}" />-->
                         </DataGrid.Columns>
                     </DataGrid>
                     <TextBox x:Name="searchInput" Grid.Row="0" Grid.Column="0" TextChanged="searchInput_TextChanged"/>
@@ -87,7 +97,7 @@
                     <Border x:Name="border" ClipToBounds="True">
                         <Image x:Name="graphImage" MouseLeftButtonDown="graphImage_MouseLeftButtonDown" MouseLeftButtonUp="graphImage_MouseLeftButtonUp" MouseMove="graphImage_MouseMove" MouseWheel="graphImage_MouseWheel"/>
                     </Border>
-                    <Label x:Name="ReloadStatus" Content="Reloaded !" Height="30" Margin="10,0,0,0" Visibility="Visible" Foreground="#FFD63A3A" FontWeight="Bold" />
+                    <Label x:Name="ReloadStatus" Content="Loading..." Height="30" Margin="10,206,0,205" Visibility="Visible" Foreground="#FFD63A3A" FontWeight="Bold" HorizontalAlignment="Left" Width="72" IsEnabled="True" />
                 </Grid>
             </TabItem>
         </TabControl>

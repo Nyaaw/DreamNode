@@ -229,7 +229,11 @@ shape = ""box""
         private void resetDataGrid()
         {
             var view = CollectionViewSource.GetDefaultView(datagrid1.ItemsSource);
-            view?.SortDescriptions.Clear();
+            view.SortDescriptions.Clear();
+
+            view.Filter = null;
+
+            searchInput.Text = null;
 
             foreach (var column in datagrid1.Columns)
             {
@@ -552,12 +556,39 @@ shape = ""box""
 
         private void searchInput_TextChanged(object sender, TextChangedEventArgs e)
         {
-            
+            var view = CollectionViewSource.GetDefaultView(datagrid1.ItemsSource);
+            view.SortDescriptions.Add(new System.ComponentModel.SortDescription("id", System.ComponentModel.ListSortDirection.Ascending));
+
+            view.Filter = (p) => (p as Pool).id.Contains((sender as TextBox).Text, StringComparison.CurrentCultureIgnoreCase);
+
+
+            //foreach (var column in datagrid1.Columns)
+            //{
+            //    column.SortDirection = null;
+            //}
         }
 
         private void btnReset_Click(object sender, RoutedEventArgs e)
         {
             resetDataGrid();
+        }
+
+        private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var data = (sender as DataGridRow).DataContext;
+
+            if(data is Pool)
+                engine.GoTo(data as Pool, true);
+            else if (data is Passage)
+            {
+                if ((data as Passage).link == null)
+                    return;
+
+                engine.GoTo((data as Passage).link, true);
+            }
+
+            Dispatcher.BeginInvoke((Action)(() => tabMenu.SelectedIndex = 1));
+            // Some operations with this row
         }
 
     } 
