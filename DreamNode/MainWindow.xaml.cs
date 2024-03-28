@@ -196,17 +196,16 @@ shape = ""box""
                         continue;
                     }
                     
-                    if(!hashPool.Contains(a.link)){
-                        
+                    if(hashPool.Contains(a.link)){
+                        continue;
+                    }
+                    
+                    if(!nextPools.Contains(a.link)){
                         writePool(sb, a.link)
                         nextPools.Push(a.link)
-                    }
-                        
-
-                    if (hashPassage.Any(t => t.Item1 == eval && t.Item2 == a.link || t.Item2 == eval && t.Item1 == a.link))
-                        continue;
-                    else
-                    {
+                    }                        
+                    
+                    if (!hashPassage.Any(t => t.Item1 == eval && t.Item2 == a.link || t.Item2 == eval && t.Item1 == a.link)){
                         writePassage(sb, eval, a);
                         hashPassage.Add(new Tuple<Pool, Pool>(eval, a.link));
                     }
