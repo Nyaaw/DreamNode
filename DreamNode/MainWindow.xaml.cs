@@ -170,20 +170,41 @@ shape = ""box""
             sb.AppendLine("//pools");
 
             HashSet<Pool> hashPool = new();
+            Queue<Pool> nextPools = new();
+            
+            HashSet<Tuple<Pool, Pool>> hashPassage = new();
 
-            Pool eval = engine.pools.First();
-            Pool old = null;
+            int nullcount = 0;
+
+            Pool eval = null;
 
             bool shouldStop = false;
+            
+            nextPools.Push(engine.pools.First());
 
-            while(!shouldStop)
+            while(!nextPools.Empty)
             {
-                if (hashPool.Contains(eval))
+                eval = nextPools.Pop();
+                
+                
+                foreach (var a in eval.passages)
                 {
-                    eval = old;
-                    continue;
-                }
+                    if (a.link == null)
+                    {
+                        sb.AppendLine($"null{++nullcount} [shape = circle, label=\"\", width=0.12]");
+                        sb.AppendLine($"\"{eval.id}\" -- null{nullcount} [taillabel=\"{a.type.ToString().First()}\"]");
+                        continue;
+                    }
+                        
 
+                    if (hashPassage.Any(t => t.Item1 == eval && t.Item2 == a.link || t.Item2 == eval && t.Item1 == a.link))
+                        continue;
+                    else
+                    {
+                        writePassage(sb, eval, a);
+                        hashPassage.Add(new Tuple<Pool, Pool>(eval, a.link));
+                    }
+                }
 
                 writePool(sb, eval);
             }
@@ -191,35 +212,6 @@ shape = ""box""
             //Random rng = new Random();
 
             //var shuffledpools = engine.pools.OrderBy(_ => rng.Next()).ToList();
-
-            HashSet<Tuple<Pool, Pool>> hashPassage = new();
-
-            sb.AppendLine();
-            sb.AppendLine("//passages");
-
-            int nullcount = 0;
-
-            foreach (var p in engine.pools)
-            {
-                foreach (var a in p.passages)
-                {
-                    if (a.link == null)
-                    {
-                        sb.AppendLine($"null{++nullcount} [shape = circle, label=\"\", width=0.12]");
-                        sb.AppendLine($"\"{p.id}\" -- null{nullcount} [taillabel=\"{a.type.ToString().First()}\"]");
-                        continue;
-                    }
-                        
-
-                    if (hashPassage.Any(t => t.Item1 == p && t.Item2 == a.link || t.Item2 == p && t.Item1 == a.link))
-                        continue;
-                    else
-                    {
-                        writePassage(sb, p, a);
-                        hashPassage.Add(new Tuple<Pool, Pool>(p, a.link));
-                    }
-                }
-            }
 
             sb.AppendLine("//views");
 
