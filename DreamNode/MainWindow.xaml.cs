@@ -170,7 +170,7 @@ shape = ""box""
             sb.AppendLine("//pools");
 
             HashSet<Pool> hashPool = new();
-            Queue<Pool> nextPools = new();
+            Stack<Pool> nextPools = new();
             
             HashSet<Tuple<Pool, Pool>> hashPassage = new();
 
@@ -181,11 +181,11 @@ shape = ""box""
             bool shouldStop = false;
             
             nextPools.Push(engine.pools.First());
+            writePool(sb, engine.pools.First());
 
             while(!nextPools.Empty)
             {
                 eval = nextPools.Pop();
-                
                 
                 foreach (var a in eval.passages)
                 {
@@ -194,6 +194,12 @@ shape = ""box""
                         sb.AppendLine($"null{++nullcount} [shape = circle, label=\"\", width=0.12]");
                         sb.AppendLine($"\"{eval.id}\" -- null{nullcount} [taillabel=\"{a.type.ToString().First()}\"]");
                         continue;
+                    }
+                    
+                    if(!hashPool.Contains(a.link)){
+                        
+                        writePool(sb, a.link)
+                        nextPools.Push(a.link)
                     }
                         
 
@@ -205,8 +211,14 @@ shape = ""box""
                         hashPassage.Add(new Tuple<Pool, Pool>(eval, a.link));
                     }
                 }
-
-                writePool(sb, eval);
+                
+                hashPool.Add(eval)
+            }
+            
+            if(hashPool.Count() != engine.pools.Count()){
+                //some pools are not attached to Spawn
+                
+                // redo process with nextPools = one node from each outside groups
             }
 
             //Random rng = new Random();
