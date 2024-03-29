@@ -171,10 +171,7 @@ shape = ""box""
 
             foreach (var p in engine.pools)
             {
-                sb.Append("\"");
-                sb.Append(p.id);
-                sb.Append($"\"[width={Math.Pow(2, (int)p.size)}, height={Math.Pow(2, (int)p.size) * 0.7}]");
-                sb.AppendLine();
+                writePool(sb, p);
             }
 
             //Random rng = new Random();
