@@ -183,7 +183,7 @@ shape = ""box""
             nextPools.Push(engine.pools.First());
             writePool(sb, engine.pools.First());
 
-            while(!nextPools.Empty)
+            while(nextPools.Count != 0)
             {
                 eval = nextPools.Pop();
                 
@@ -201,8 +201,8 @@ shape = ""box""
                     }
                     
                     if(!nextPools.Contains(a.link)){
-                        writePool(sb, a.link)
-                        nextPools.Push(a.link)
+                        writePool(sb, a.link);
+                        nextPools.Push(a.link);
                     }                        
                     
                     if (!hashPassage.Any(t => t.Item1 == eval && t.Item2 == a.link || t.Item2 == eval && t.Item1 == a.link)){
@@ -210,8 +210,8 @@ shape = ""box""
                         hashPassage.Add(new Tuple<Pool, Pool>(eval, a.link));
                     }
                 }
-                
-                hashPool.Add(eval)
+
+                hashPool.Add(eval);
             }
             
             if(hashPool.Count() != engine.pools.Count()){
