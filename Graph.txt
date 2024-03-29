@@ -1,5 +1,5 @@
 {
-  "poolNumber": 285,
+  "poolNumber": 304,
   "views": [
     {
       "1": "Tree middle",
@@ -7,7 +7,7 @@
     },
     {
       "1": "Room 47",
-      "2": "Big crossroad"
+      "2": "Big crossroad A"
     },
     {
       "1": "Room 53",
@@ -54,7 +54,7 @@
       "2": "Room 81"
     },
     {
-      "1": "Big crossroad",
+      "1": "Big crossroad A",
       "2": "Room 82"
     },
     {
@@ -79,7 +79,7 @@
     },
     {
       "1": "Room 225",
-      "2": "Big crossroad"
+      "2": "Big crossroad A"
     },
     {
       "1": "Room 248",
@@ -595,7 +595,7 @@
         },
         {
           "type": 1,
-          "link": "Big crossroad",
+          "link": "Big crossroad A",
           "description": null
         }
       ]
@@ -1810,14 +1810,14 @@
         },
         {
           "type": 3,
-          "link": "Big crossroad",
+          "link": "Big crossroad A",
           "description": null
         }
       ]
     },
     {
-      "id": "Big crossroad",
-      "desc": null,
+      "id": "Big crossroad A",
+      "desc": "view on 2 passages upside",
       "size": 1,
       "passages": [
         {
@@ -2073,7 +2073,7 @@
     },
     {
       "id": "Room 120",
-      "desc": null,
+      "desc": "",
       "size": 0,
       "passages": [
         {
@@ -2088,7 +2088,7 @@
         },
         {
           "type": 1,
-          "link": "null",
+          "link": "Big crossroad B",
           "description": null
         }
       ]
@@ -2234,7 +2234,7 @@
         },
         {
           "type": 0,
-          "link": "null",
+          "link": "Room 302",
           "description": null
         }
       ]
@@ -3616,6 +3616,16 @@
           "type": 3,
           "link": "Room 211",
           "description": null
+        },
+        {
+          "type": 2,
+          "link": "null",
+          "description": null
+        },
+        {
+          "type": 2,
+          "link": "Screamer",
+          "description": null
         }
       ]
     },
@@ -3755,7 +3765,7 @@
         },
         {
           "type": 2,
-          "link": "null",
+          "link": "Room 286",
           "description": null
         },
         {
@@ -4599,6 +4609,308 @@
         {
           "type": 1,
           "link": "Green pooltoy",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Room 286",
+      "desc": "Stairs",
+      "size": 0,
+      "passages": [
+        {
+          "type": 3,
+          "link": "Snake green slide",
+          "description": null
+        },
+        {
+          "type": 0,
+          "link": "Room 287",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Room 287",
+      "desc": "",
+      "size": 0,
+      "passages": [
+        {
+          "type": 1,
+          "link": "Room 286",
+          "description": null
+        },
+        {
+          "type": 1,
+          "link": "Room 288",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Room 288",
+      "desc": null,
+      "size": 1,
+      "passages": [
+        {
+          "type": 0,
+          "link": "Room 287",
+          "description": null
+        },
+        {
+          "type": 2,
+          "link": "Room 289",
+          "description": null
+        },
+        {
+          "type": 1,
+          "link": "Orange and cyan slides",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Room 289",
+      "desc": "",
+      "size": 0,
+      "passages": [
+        {
+          "type": 3,
+          "link": "Room 288",
+          "description": null
+        },
+        {
+          "type": 2,
+          "link": "Room 290",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Room 290",
+      "desc": "View on PRGCGPR",
+      "size": 0,
+      "passages": [
+        {
+          "type": 3,
+          "link": "Room 289",
+          "description": null
+        },
+        {
+          "type": 2,
+          "link": "Screamer",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Screamer",
+      "desc": "",
+      "size": 1,
+      "passages": [
+        {
+          "type": 3,
+          "link": "Room 290",
+          "description": null
+        },
+        {
+          "type": 3,
+          "link": "Bagel top",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Orange and cyan slides",
+      "desc": "Stairs inside",
+      "size": 1,
+      "passages": [
+        {
+          "type": 0,
+          "link": "Room 288",
+          "description": null
+        },
+        {
+          "type": 1,
+          "link": "Room 294",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Room 294",
+      "desc": "",
+      "size": 1,
+      "passages": [
+        {
+          "type": 0,
+          "link": "Orange and cyan slides",
+          "description": null
+        },
+        {
+          "type": 2,
+          "link": "Elevator 2",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Elevator 2",
+      "desc": null,
+      "size": 0,
+      "passages": [
+        {
+          "type": 3,
+          "link": "Room 294",
+          "description": null
+        },
+        {
+          "type": 3,
+          "link": "null",
+          "description": null
+        },
+        {
+          "type": 0,
+          "link": "Room 296",
+          "description": null
+        },
+        {
+          "type": 2,
+          "link": "null",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Room 296",
+      "desc": null,
+      "size": 1,
+      "passages": [
+        {
+          "type": 1,
+          "link": "Elevator 2",
+          "description": null
+        },
+        {
+          "type": 0,
+          "link": "Big crossroad B",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Big crossroad B",
+      "desc": "Has no views. 2 bushes and stairs west",
+      "size": 2,
+      "passages": [
+        {
+          "type": 1,
+          "link": "Room 296",
+          "description": null
+        },
+        {
+          "type": 0,
+          "link": "Room 298",
+          "description": null
+        },
+        {
+          "type": 2,
+          "link": "null",
+          "description": null
+        },
+        {
+          "type": 3,
+          "link": "Room 120",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Room 298",
+      "desc": "Stairs inside. Dark ",
+      "size": 2,
+      "passages": [
+        {
+          "type": 1,
+          "link": "Big crossroad B",
+          "description": null
+        },
+        {
+          "type": 2,
+          "link": "Church north",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Church north",
+      "desc": "Music",
+      "size": 2,
+      "passages": [
+        {
+          "type": 3,
+          "link": "Room 298",
+          "description": null
+        },
+        {
+          "type": 3,
+          "link": "null",
+          "description": null
+        },
+        {
+          "type": 2,
+          "link": "Room 300",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Room 300",
+      "desc": "",
+      "size": 2,
+      "passages": [
+        {
+          "type": 3,
+          "link": "Church north",
+          "description": null
+        },
+        {
+          "type": 3,
+          "link": "Huge stairs",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Huge stairs",
+      "desc": "",
+      "size": 2,
+      "passages": [
+        {
+          "type": 2,
+          "link": "Room 300",
+          "description": null
+        },
+        {
+          "type": 3,
+          "link": "Room 302",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Room 302",
+      "desc": "chair inside !! 3 blobs, green slider end. clouds.",
+      "size": 1,
+      "passages": [
+        {
+          "type": 2,
+          "link": "Huge stairs",
+          "description": null
+        },
+        {
+          "type": 1,
+          "link": "Dark cloud threeway",
           "description": null
         }
       ]
