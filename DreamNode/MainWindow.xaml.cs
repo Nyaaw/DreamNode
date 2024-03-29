@@ -170,59 +170,56 @@ shape = ""box""
             sb.AppendLine("//pools");
 
             HashSet<Pool> hashPool = new();
-            Stack<Pool> nextPools = new();
-            
-            HashSet<Tuple<Pool, Pool>> hashPassage = new();
 
-            int nullcount = 0;
-
-            Pool eval = null;
+            Pool eval = engine.pools.First();
+            Pool old = null;
 
             bool shouldStop = false;
-            
-            nextPools.Push(engine.pools.First());
-            writePool(sb, engine.pools.First());
 
-            while(nextPools.Count != 0)
+            while(!shouldStop)
             {
-                eval = nextPools.Pop();
-                
-                foreach (var a in eval.passages)
+                if (hashPool.Contains(eval))
                 {
-                    if (a.link == null)
-                    {
-                        sb.AppendLine($"null{++nullcount} [shape = circle, label=\"\", width=0.12]");
-                        sb.AppendLine($"\"{eval.id}\" -- null{nullcount} [taillabel=\"{a.type.ToString().First()}\"]");
-                        continue;
-                    }
-                    
-                    if(hashPool.Contains(a.link)){
-                        continue;
-                    }
-                    
-                    if(!nextPools.Contains(a.link)){
-                        writePool(sb, a.link);
-                        nextPools.Push(a.link);
-                    }                        
-                    
-                    if (!hashPassage.Any(t => t.Item1 == eval && t.Item2 == a.link || t.Item2 == eval && t.Item1 == a.link)){
-                        writePassage(sb, eval, a);
-                        hashPassage.Add(new Tuple<Pool, Pool>(eval, a.link));
-                    }
+                    eval = old;
+                    continue;
                 }
 
-                hashPool.Add(eval);
-            }
-            
-            if(hashPool.Count() != engine.pools.Count()){
-                //some pools are not attached to Spawn
-                
-                // redo process with nextPools = one node from each outside groups
+
+                writePool(sb, eval);
             }
 
             //Random rng = new Random();
 
             //var shuffledpools = engine.pools.OrderBy(_ => rng.Next()).ToList();
+
+            HashSet<Tuple<Pool, Pool>> hashPassage = new();
+
+            sb.AppendLine();
+            sb.AppendLine("//passages");
+
+            int nullcount = 0;
+
+            foreach (var p in engine.pools)
+            {
+                foreach (var a in p.passages)
+                {
+                    if (a.link == null)
+                    {
+                        sb.AppendLine($"null{++nullcount} [shape = circle, label=\"\", width=0.12]");
+                        sb.AppendLine($"\"{p.id}\" -- null{nullcount} [taillabel=\"{a.type.ToString().First()}\"]");
+                        continue;
+                    }
+                        
+
+                    if (hashPassage.Any(t => t.Item1 == p && t.Item2 == a.link || t.Item2 == p && t.Item1 == a.link))
+                        continue;
+                    else
+                    {
+                        writePassage(sb, p, a);
+                        hashPassage.Add(new Tuple<Pool, Pool>(p, a.link));
+                    }
+                }
+            }
 
             sb.AppendLine("//views");
 
