@@ -1,5 +1,5 @@
 {
-  "poolNumber": 304,
+  "poolNumber": 350,
   "views": [
     {
       "1": "Tree middle",
@@ -92,6 +92,38 @@
     {
       "1": "Room 256",
       "2": "One weird window"
+    },
+    {
+      "1": "Room 315",
+      "2": "Room 313"
+    },
+    {
+      "1": "Room 320",
+      "2": "Room 313"
+    },
+    {
+      "1": "Room 320",
+      "2": "Room 315"
+    },
+    {
+      "1": "Og city window",
+      "2": "Og city"
+    },
+    {
+      "1": "Room 182",
+      "2": "Room 330"
+    },
+    {
+      "1": "Room 337",
+      "2": "Room 331"
+    },
+    {
+      "1": "Tree top",
+      "2": "Tree middle"
+    },
+    {
+      "1": "Room 342",
+      "2": "Blue fusilli"
     }
   ],
   "pools": [
@@ -305,7 +337,7 @@
         },
         {
           "type": 1,
-          "link": "null",
+          "link": "Room 347",
           "description": null
         },
         {
@@ -343,13 +375,13 @@
           "description": null
         },
         {
-          "type": 0,
-          "link": "null",
+          "type": 2,
+          "link": "Room 234",
           "description": null
         },
         {
-          "type": 2,
-          "link": "Room 234",
+          "type": 0,
+          "link": "Room 334",
           "description": null
         }
       ]
@@ -661,22 +693,12 @@
         },
         {
           "type": 2,
-          "link": "null",
+          "link": "Room 334",
           "description": null
         },
         {
           "type": 2,
-          "link": "null",
-          "description": null
-        },
-        {
-          "type": 2,
-          "link": "null",
-          "description": null
-        },
-        {
-          "type": 2,
-          "link": "null",
+          "link": "Room 336",
           "description": null
         },
         {
@@ -701,22 +723,32 @@
         },
         {
           "type": 3,
-          "link": "null",
-          "description": null
-        },
-        {
-          "type": 3,
-          "link": "null",
-          "description": null
-        },
-        {
-          "type": 3,
-          "link": "null",
+          "link": "Room 315",
           "description": null
         },
         {
           "type": 0,
           "link": "Og city",
+          "description": null
+        },
+        {
+          "type": 3,
+          "link": "Room 313",
+          "description": null
+        },
+        {
+          "type": 2,
+          "link": "Room 331",
+          "description": null
+        },
+        {
+          "type": 2,
+          "link": "Room 331",
+          "description": null
+        },
+        {
+          "type": 3,
+          "link": "null",
           "description": null
         }
       ]
@@ -1051,6 +1083,11 @@
         {
           "type": 1,
           "link": "Room 62",
+          "description": null
+        },
+        {
+          "type": 0,
+          "link": "Room 309",
           "description": null
         }
       ]
@@ -2731,7 +2768,7 @@
     },
     {
       "id": "Room 158",
-      "desc": null,
+      "desc": "",
       "size": 0,
       "passages": [
         {
@@ -2763,7 +2800,7 @@
         },
         {
           "type": 3,
-          "link": "null",
+          "link": "Arcs no light",
           "description": null
         }
       ]
@@ -2919,7 +2956,7 @@
         },
         {
           "type": 1,
-          "link": "Maintenance 1",
+          "link": "Maintenance",
           "description": null
         },
         {
@@ -2940,7 +2977,7 @@
       ]
     },
     {
-      "id": "Maintenance 1",
+      "id": "Maintenance",
       "desc": null,
       "size": 0,
       "passages": [
@@ -2956,24 +2993,24 @@
         },
         {
           "type": 1,
-          "link": "null",
+          "link": "Room 342",
           "description": null
         },
         {
           "type": 1,
-          "link": "null",
+          "link": "Tree top",
           "description": null
         }
       ]
     },
     {
       "id": "Room 173",
-      "desc": null,
+      "desc": "",
       "size": 0,
       "passages": [
         {
           "type": 1,
-          "link": "Maintenance 1",
+          "link": "Maintenance",
           "description": null
         },
         {
@@ -2983,7 +3020,7 @@
         },
         {
           "type": 3,
-          "link": "null",
+          "link": "Room 337",
           "description": null
         }
       ]
@@ -3022,7 +3059,7 @@
         },
         {
           "type": 3,
-          "link": "null",
+          "link": "Og city window",
           "description": null
         }
       ]
@@ -3061,13 +3098,13 @@
         },
         {
           "type": 4,
-          "link": "Room 178",
+          "link": "Staircage down",
           "description": null
         }
       ]
     },
     {
-      "id": "Room 178",
+      "id": "Staircage down",
       "desc": null,
       "size": 0,
       "passages": [
@@ -3083,7 +3120,7 @@
         },
         {
           "type": 1,
-          "link": "null",
+          "link": "Room 337",
           "description": null
         }
       ]
@@ -3129,7 +3166,7 @@
       "passages": [
         {
           "type": 1,
-          "link": "Room 178",
+          "link": "Staircage down",
           "description": null
         },
         {
@@ -3465,7 +3502,7 @@
         },
         {
           "type": 3,
-          "link": "null",
+          "link": "hydroponics",
           "description": null
         },
         {
@@ -4469,7 +4506,7 @@
     },
     {
       "id": "Room 270",
-      "desc": null,
+      "desc": "",
       "size": 0,
       "passages": [
         {
@@ -4479,7 +4516,7 @@
         },
         {
           "type": 0,
-          "link": "null",
+          "link": "Room 330",
           "description": null
         },
         {
@@ -4569,13 +4606,13 @@
         },
         {
           "type": 3,
-          "link": "Quadstairs 4",
+          "link": "Quadstairs D",
           "description": null
         }
       ]
     },
     {
-      "id": "Quadstairs 4",
+      "id": "Quadstairs D",
       "desc": "",
       "size": 1,
       "passages": [
@@ -4598,7 +4635,7 @@
       "passages": [
         {
           "type": 0,
-          "link": "Quadstairs 4",
+          "link": "Quadstairs D",
           "description": null
         },
         {
@@ -4911,6 +4948,592 @@
         {
           "type": 1,
           "link": "Dark cloud threeway",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "hydroponics",
+      "desc": "",
+      "size": 2,
+      "passages": [
+        {
+          "type": 2,
+          "link": "Wave crossroad",
+          "description": null
+        },
+        {
+          "type": 3,
+          "link": "Biggest pool",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Biggest pool",
+      "desc": null,
+      "size": 2,
+      "passages": [
+        {
+          "type": 2,
+          "link": "hydroponics",
+          "description": null
+        },
+        {
+          "type": 1,
+          "link": "null",
+          "description": null
+        },
+        {
+          "type": 1,
+          "link": "null",
+          "description": null
+        },
+        {
+          "type": 0,
+          "link": "Snake path",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Snake path",
+      "desc": null,
+      "size": 2,
+      "passages": [
+        {
+          "type": 1,
+          "link": "Biggest pool",
+          "description": null
+        },
+        {
+          "type": 2,
+          "link": "Quadstairs E",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Quadstairs E",
+      "desc": null,
+      "size": 0,
+      "passages": [
+        {
+          "type": 3,
+          "link": "Snake path",
+          "description": null
+        },
+        {
+          "type": 1,
+          "link": "6 Arcs pool",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Room 309",
+      "desc": null,
+      "size": 1,
+      "passages": [
+        {
+          "type": 1,
+          "link": "EYE SIEGE",
+          "description": null
+        },
+        {
+          "type": 0,
+          "link": "6 Arcs pool",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "6 Arcs pool",
+      "desc": "",
+      "size": 2,
+      "passages": [
+        {
+          "type": 1,
+          "link": "Room 309",
+          "description": null
+        },
+        {
+          "type": 0,
+          "link": "Quadstairs E",
+          "description": null
+        },
+        {
+          "type": 0,
+          "link": "Pillars no light",
+          "description": null
+        },
+        {
+          "type": 1,
+          "link": "Purple slide emoji pool",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Purple slide emoji pool",
+      "desc": null,
+      "size": 1,
+      "passages": [
+        {
+          "type": 0,
+          "link": "6 Arcs pool",
+          "description": null
+        },
+        {
+          "type": 1,
+          "link": "Wall pits",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Wall pits",
+      "desc": null,
+      "size": 0,
+      "passages": [
+        {
+          "type": 0,
+          "link": "Purple slide emoji pool",
+          "description": null
+        },
+        {
+          "type": 2,
+          "link": "Room 313",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Room 313",
+      "desc": null,
+      "size": 0,
+      "passages": [
+        {
+          "type": 3,
+          "link": "Wall pits",
+          "description": null
+        },
+        {
+          "type": 2,
+          "link": "Triangle crossroad",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Room 315",
+      "desc": "",
+      "size": 0,
+      "passages": [
+        {
+          "type": 2,
+          "link": "Triangle crossroad",
+          "description": null
+        },
+        {
+          "type": 3,
+          "link": "Screamer B",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Screamer B",
+      "desc": null,
+      "size": 1,
+      "passages": [
+        {
+          "type": 2,
+          "link": "Room 315",
+          "description": null
+        },
+        {
+          "type": 3,
+          "link": "Pranker emoji pool",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Pranker emoji pool",
+      "desc": "",
+      "size": 0,
+      "passages": [
+        {
+          "type": 2,
+          "link": "Screamer B",
+          "description": null
+        },
+        {
+          "type": 1,
+          "link": "Room 318",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Room 318",
+      "desc": "Stairs",
+      "size": 0,
+      "passages": [
+        {
+          "type": 0,
+          "link": "Pranker emoji pool",
+          "description": null
+        },
+        {
+          "type": 1,
+          "link": "Room 319",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Room 319",
+      "desc": "",
+      "size": 0,
+      "passages": [
+        {
+          "type": 0,
+          "link": "Room 318",
+          "description": null
+        },
+        {
+          "type": 2,
+          "link": "Room 320",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Room 320",
+      "desc": null,
+      "size": 0,
+      "passages": [
+        {
+          "type": 3,
+          "link": "Room 319",
+          "description": null
+        },
+        {
+          "type": 0,
+          "link": "Room 322",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Room 322",
+      "desc": null,
+      "size": 0,
+      "passages": [
+        {
+          "type": 2,
+          "link": "Og city window",
+          "description": null
+        },
+        {
+          "type": 1,
+          "link": "Room 320",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Og city window",
+      "desc": null,
+      "size": 0,
+      "passages": [
+        {
+          "type": 3,
+          "link": "Room 322",
+          "description": null
+        },
+        {
+          "type": 2,
+          "link": "Room 175",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Pillars no light",
+      "desc": "Pitch black",
+      "size": 2,
+      "passages": [
+        {
+          "type": 1,
+          "link": "6 Arcs pool",
+          "description": null
+        },
+        {
+          "type": 3,
+          "link": "Room 327",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Room 327",
+      "desc": "Pitch black. Stairs inside",
+      "size": 0,
+      "passages": [
+        {
+          "type": 2,
+          "link": "Pillars no light",
+          "description": null
+        },
+        {
+          "type": 2,
+          "link": "Arcs no light",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Arcs no light",
+      "desc": "",
+      "size": 2,
+      "passages": [
+        {
+          "type": 3,
+          "link": "Room 327",
+          "description": null
+        },
+        {
+          "type": 2,
+          "link": "Og city",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Room 330",
+      "desc": "Stairs inside",
+      "size": 1,
+      "passages": [
+        {
+          "type": 1,
+          "link": "Room 270",
+          "description": null
+        },
+        {
+          "type": 1,
+          "link": "Room 331",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Room 331",
+      "desc": "",
+      "size": 0,
+      "passages": [
+        {
+          "type": 0,
+          "link": "Room 330",
+          "description": null
+        },
+        {
+          "type": 3,
+          "link": "Triangle crossroad",
+          "description": null
+        },
+        {
+          "type": 3,
+          "link": "Triangle crossroad",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Room 334",
+      "desc": "",
+      "size": 1,
+      "passages": [
+        {
+          "type": 3,
+          "link": "Triangle crossroad",
+          "description": null
+        },
+        {
+          "type": 1,
+          "link": "Tree base",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Room 336",
+      "desc": "Bush north, stairs inside",
+      "size": 0,
+      "passages": [
+        {
+          "type": 3,
+          "link": "Triangle crossroad",
+          "description": null
+        },
+        {
+          "type": 1,
+          "link": "Room 343",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Room 337",
+      "desc": "Stairs inside",
+      "size": 0,
+      "passages": [
+        {
+          "type": 0,
+          "link": "Staircage down",
+          "description": null
+        },
+        {
+          "type": 2,
+          "link": "Room 173",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Tree top",
+      "desc": null,
+      "size": 1,
+      "passages": [
+        {
+          "type": 0,
+          "link": "Maintenance",
+          "description": null
+        },
+        {
+          "type": 1,
+          "link": "null",
+          "description": null
+        },
+        {
+          "type": 3,
+          "link": "null",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Room 342",
+      "desc": null,
+      "size": 0,
+      "passages": [
+        {
+          "type": 0,
+          "link": "Maintenance",
+          "description": null
+        },
+        {
+          "type": 1,
+          "link": "Room 343",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Room 343",
+      "desc": "Circle in wall north ",
+      "size": 1,
+      "passages": [
+        {
+          "type": 0,
+          "link": "Room 342",
+          "description": null
+        },
+        {
+          "type": 0,
+          "link": "Room 336",
+          "description": null
+        },
+        {
+          "type": 1,
+          "link": "Room 345",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Room 345",
+      "desc": "",
+      "size": 0,
+      "passages": [
+        {
+          "type": 0,
+          "link": "Room 343",
+          "description": null
+        },
+        {
+          "type": 2,
+          "link": "Room 346",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Room 346",
+      "desc": null,
+      "size": 0,
+      "passages": [
+        {
+          "type": 3,
+          "link": "Room 345",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Room 347",
+      "desc": "Stairs inside",
+      "size": 0,
+      "passages": [
+        {
+          "type": 0,
+          "link": "Bush north",
+          "description": null
+        },
+        {
+          "type": 3,
+          "link": "Room 348",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Room 348",
+      "desc": "Stairs inside",
+      "size": 0,
+      "passages": [
+        {
+          "type": 2,
+          "link": "Room 347",
+          "description": null
+        },
+        {
+          "type": 1,
+          "link": "Room 349",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Room 349",
+      "desc": "",
+      "size": 0,
+      "passages": [
+        {
+          "type": 0,
+          "link": "Room 348",
           "description": null
         }
       ]
