@@ -169,23 +169,12 @@ shape = ""box""
             sb.AppendLine();
             sb.AppendLine("//pools");
 
-            HashSet<Pool> hashPool = new();
-
-            Pool eval = engine.pools.First();
-            Pool old = null;
-
-            bool shouldStop = false;
-
-            while(!shouldStop)
+            foreach (var p in engine.pools)
             {
-                if (hashPool.Contains(eval))
-                {
-                    eval = old;
-                    continue;
-                }
-
-
-                writePool(sb, eval);
+                sb.Append("\"");
+                sb.Append(p.id);
+                sb.Append($"\"[width={Math.Pow(2, (int)p.size)}, height={Math.Pow(2, (int)p.size) * 0.7}]");
+                sb.AppendLine();
             }
 
             //Random rng = new Random();
