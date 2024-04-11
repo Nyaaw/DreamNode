@@ -55,14 +55,14 @@ namespace DreamNode.Graph
             return count;
         }
 
-        public Dictionary<PassageType, Passage[]> GetPassages()
+        public Dictionary<PassageType, List<Passage>> GetPassages()
         {
-            Dictionary<PassageType, Passage[]> count = new Dictionary<PassageType, Passage[]>();
+            Dictionary<PassageType, List<Passage>> count = new Dictionary<PassageType, List<Passage>>();
 
             
             foreach(PassageType pt in Enum.GetValues(typeof(PassageType)))
             {
-                count.Add(pt, passages.Where(p => p.type == pt).ToArray());
+                count.Add(pt, passages.Where(p => p.type == pt).ToList());
             }
             
             return count;

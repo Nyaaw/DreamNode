@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -72,63 +73,155 @@ namespace DreamNode
             datagrid1.Items.Refresh();
             multiInput.ItemsSource = engine.pools.Select(p => p.id);
 
-
-            if (goToSubmenu.HasValue)
-            {
-                var passages = active.GetPassages()[goToSubmenu.Value];
-
-                StringBuilder sb = new();
-                for (int i = 1; i < 9; i++)
-                {
-                    int index = submenuPrestige * 9 + i - 1;
-                    if (passages.Length == index)
-                    {
-                        sb.AppendLine();
-                        break;
-                    }
-
-                    sb.AppendLine($"{i}: {passages[index].link?.id ?? "none"}");
-                }
-
-                if (passages.Length > 9)
-                {
-                    sb.AppendLine("0: Page suivante");
-                    sb.AppendLine($"Page {submenuPrestige}/{passages.Length / 9}");
-                }
+            GenerateOverview();
 
 
-                this.PoolPassagesOverview.Content = sb.ToString();
-            }
+//            if (goToSubmenu.HasValue)
+//            {
+//                var passages = active.GetPassages()[goToSubmenu.Value];
 
-            else
-            {
-                var passagesCount = active.PassageCount();
-                PassageType? oldDir = active.passages.Where(p => p.link != null && p.link == engine.old)?.FirstOrDefault()?.type;
+            //                StringBuilder sb = new();
+            //                for (int i = 1; i < 9; i++)
+            //                {
+            //                    if (passages.Length == i)
+            //                    {
+            //                        sb.AppendLine();
+            //                        break;
+            //                    }
 
-                string Decorate(PassageType type)
-                {
-                    if (oldDir == type)
-                        return $"[{passagesCount[type]}]";
-                    else
-                        return passagesCount[type].ToString();
-                }
+            //                    sb.AppendLine($"{i}: {passages[i].link?.id ?? "none"}");
+            //                }
 
-                this.PoolPassagesOverview.Content =
-$@"        {Decorate(PassageType.North)}
 
-{Decorate(PassageType.West)}                {Decorate(PassageType.East)}
+            //                this.PoolPassagesOverview.Content = sb.ToString();
+            //            }
 
-        {Decorate(PassageType.South)}
+            //            else
+            //            {
+            //                var passagesCount = active.PassageCount();
+            //                PassageType? oldDir = active.passages.Where(p => p.link != null && p.link == engine.old)?.FirstOrDefault()?.type;
 
-Up: {Decorate(PassageType.Up)}
-Down: {Decorate(PassageType.Down)}
+            //                string Decorate(PassageType type)
+            //                {
+            //                    if (oldDir == type)
+            //                        return $"[{passagesCount[type]}]";
+            //                    else
+            //                        return passagesCount[type].ToString();
+            //                }
 
-Plus: {Decorate(PassageType.Plus)}";
-            }
+            //                this.PoolPassagesOverview.Content =
+            //$@"        {Decorate(PassageType.North)}
+
+            //{Decorate(PassageType.West)}                {Decorate(PassageType.East)}
+
+            //        {Decorate(PassageType.South)}
+
+            //Up: {Decorate(PassageType.Up)}
+            //Down: {Decorate(PassageType.Down)}
+
+            //Plus: {Decorate(PassageType.Plus)}";
+            //            }
 
 
 
         }
+
+        private void GenerateOverview()
+        {
+            short wrapLength = 23;
+            short smallBoxHeight = 9;
+            short BigBoxHeight = 15;
+            short middleHeigth = 5;
+
+            var source = active.GetPassages();
+
+            Dictionary<PassageType, List<string>> end = new Dictionary<PassageType, List<string>>();
+
+            foreach (KeyValuePair<PassageType, List<Passage>> item in source)
+            {
+                List<string> lines = new List<string>();
+
+                foreach(Passage p in item.Value)
+                {
+                    short count = 0;
+
+                    while (p.linkId.Length > count * (wrapLength - 3))
+                    {
+
+                        lines.Add(
+                            (goToSubmenu.HasValue ? goToSubmenu.Value == item.Key ? $"{item.Value.IndexOf(p) + 1}: " : "   " : "   ")
+                            + p.linkId.Substring(count++ * (wrapLength - 3), p.linkId.Length > count * (wrapLength - 3) ? wrapLength - 3 : p.linkId.Length % (wrapLength - 3))
+                            + new string(' ', wrapLength - 3 - (p.linkId.Length % (wrapLength - 3))));
+                    }
+
+                }
+
+                end.Add(item.Key, lines);
+
+            }
+
+            string wrapSpaces = new string(' ', wrapLength);
+            string wrapSeparator = new string('=', wrapLength);
+
+
+            StringBuilder sb = new();
+
+            void sbAppend(PassageType pt, int line)
+            {
+                if(pt is PassageType.Up || pt is PassageType.South || pt is PassageType.Down)
+                {
+                    line -= 17;
+                }
+
+                if (end[pt].Count < line + 1)
+                    sb.Append(wrapSpaces);
+                else
+                    sb.Append(end[pt][line]);
+            }
+
+            for (int line = 0; line < 25; line++)
+            {
+
+                if(line <= BigBoxHeight)
+                    sbAppend(PassageType.West, line);
+                else if (line == BigBoxHeight + 1)
+                    sb.Append(wrapSeparator);
+                else
+                    sbAppend(PassageType.Up, line);
+
+                sb.Append(' ');
+
+                if (line <= smallBoxHeight)
+                    sbAppend(PassageType.North, line);
+
+                else if (line == smallBoxHeight + 1)
+                    sb.Append(wrapSeparator);
+
+                else if (line <= smallBoxHeight + 1 + middleHeigth)
+                    sb.Append(wrapSpaces);
+
+                else if (line == smallBoxHeight + 2 + middleHeigth)
+                    sb.Append(wrapSeparator);
+
+                else
+                    sbAppend(PassageType.South, line);
+
+                sb.Append(' ');
+
+
+                if (line <= BigBoxHeight)
+                    sbAppend(PassageType.East, line);
+                else if (line == BigBoxHeight + 1)
+                    sb.Append(wrapSeparator);
+                else
+                    sbAppend(PassageType.Down, line);
+
+                sb.AppendLine();
+            }
+
+            this.PoolPassagesOverview.Content = sb.ToString();
+        }
+
 
         private void GenerateView()
         {
@@ -298,14 +391,7 @@ shape = ""box""
                 {
                     int index = x - Key.NumPad0;
 
-                    if (index == 0)
-                    {
-
-                        submenuPrestige++;
-                        return;
-                    }
-
-                    togo = passages[goToSubmenu.Value][9 * submenuPrestige + index - 1];
+                    togo = passages[goToSubmenu.Value][index - 1];
 
                     goToSubmenu = null;
                 }

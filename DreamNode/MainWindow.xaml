@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:DreamNode"
         xmlns:ng="clr-namespace:DreamNode.UserControls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="625" Width="925"
+        Title="MainWindow" Height="785" Width="1135"
         KeyDown="Window_KeyDown" Closing="Window_Closing">
     <Grid>
         <TabControl SelectionChanged="TabControl_SelectionChanged" x:Name="tabMenu">
@@ -58,9 +58,8 @@
             </TabItem>
             <TabItem Header="Register">
                 <Grid x:Name="gridRegister" Background="#FFE5E5E5">
-                    <Label Content="Passages:" HorizontalAlignment="Left" Height="40" Margin="22,139,0,0" VerticalAlignment="Top" Width="100" FontSize="20" IsTabStop="False"/>
                     <Label x:Name="PoolSize" Content="" HorizontalAlignment="Left" Height="40" Margin="327,0,0,0" VerticalAlignment="Top" Width="70" FontSize="20" HorizontalContentAlignment="Right"/>
-                    <Label x:Name="PoolPassagesOverview" Content="" HorizontalAlignment="Left" Height="252" Margin="10,179,0,0" VerticalAlignment="Top" Width="182" FontSize="16" IsTabStop="False"/>
+                    <Label x:Name="PoolPassagesOverview" Content="" HorizontalAlignment="Left" Height="547" Margin="72,169,0,0" VerticalAlignment="Top" Width="781" FontSize="16" IsTabStop="False" FontFamily="Cascadia Mono Light"/>
                     <Grid HorizontalAlignment="Left" Height="129" Margin="22,10,0,0" VerticalAlignment="Top" Width="170">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*" />
@@ -82,7 +81,7 @@
                         <Button Click="NewPassageClick" Name = "newPassage2" Grid.Column="1" Grid.Row="2" IsTabStop="False">South</Button>
                         <Button Click="NewPassageClick" Name = "newPassage3" Grid.Column="2" Grid.Row="2" IsTabStop="False">Below</Button>
                     </Grid>
-                    <Label x:Name="status" Content="" HorizontalAlignment="Left" Margin="357,338,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="status" Content="" HorizontalAlignment="Left" Margin="858,504,0,0" VerticalAlignment="Top"/>
                     <TextBox x:Name="PoolDescription" HorizontalAlignment="Right" Margin="0,94,8,0" TextWrapping="Wrap" Width="263" TextChanged="PoolDescription_TextChanged" IsTabStop="False" Height="365" VerticalAlignment="Top"/>
                     <TextBox x:Name="PoolId" HorizontalAlignment="Left" Height="40" Margin="214,34,0,0" VerticalAlignment="Top" Width="243" FontSize="20" TextChanged="PoolId_TextChanged" IsTabStop="False"/>
                     <ComboBox x:Name="multiInput" Margin="0,14,10,0" Width="261" IsTabStop="False" HorizontalAlignment="Right" VerticalContentAlignment="Center" VerticalAlignment="Top" Height="26">
