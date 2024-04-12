@@ -476,7 +476,13 @@ shape = ""box""
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            engine.Save(saveFile);
+            if (engine.Save(saveFile))
+                return;
+            else
+            {
+                e.Cancel = true;
+                return;
+            }
         }
 
         private void PoolId_TextChanged(object sender, TextChangedEventArgs e)
@@ -647,9 +653,9 @@ shape = ""box""
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             this.IsEnabled = false;
-            engine.Save(saveFile);
+            bool x = engine.Save(saveFile);
             this.IsEnabled = true;
-
+            Console.WriteLine(x);
         }
 
         private void searchInput_TextChanged(object sender, TextChangedEventArgs e)

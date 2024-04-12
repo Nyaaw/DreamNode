@@ -42,43 +42,58 @@ namespace DreamNode.Register
 
         }
 
-        public void Save(string filePath)
+        public bool Save(string filePath)
         {
+            JObject rss;
+
+            try
+            {
+                rss = new JObject(
+                        new JProperty("poolNumber", Pool.id_count),
+                        new JProperty("views",
+                            new JArray(
+                                from v in views
+                                select new JObject(
+                                    new JProperty("1", v.Item1.id),
+                                    new JProperty("2", v.Item2.id)
+                        ))),
+                        new JProperty("pools",
+                            new JArray(
+                                from p in pools
+                                select new JObject(
+                                    new JProperty("id", p.id),
+                                    new JProperty("desc", p.desc),
+                                    new JProperty("size", p.size),
+                                    new JProperty("passages", new JArray(
+                                        from s in p.passages
+                                        select new JObject(
+                                            new JProperty("type", s.type),
+                                            new JProperty("link", s.linkId),
+                                            new JProperty("description", s.description)
+
+                 )))))));
+
+            } 
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+
+            if (rss.Count < 100)
+                return false;
+
             if (File.Exists(filePath))
             {
+#if !DEBUG
                 File.Copy(filePath, "G:\\Documents\\Code\\DreamNode\\BackupGraph.txt", true);
+#endif
                 File.Delete(filePath);
             }
 
-            JObject rss =
-                new JObject(
-                    new JProperty("poolNumber", Pool.id_count),
-                    new JProperty("views",
-                        new JArray(
-                            from v in views
-                            select new JObject(
-                                new JProperty("1", v.Item1.id),
-                                new JProperty("2", v.Item2.id)
-                    ))),
-                    new JProperty("pools",
-                        new JArray(
-                            from p in pools
-                            select new JObject(
-                                new JProperty("id", p.id),
-                                new JProperty("desc", p.desc),
-                                new JProperty("size", p.size),
-                                new JProperty("passages", new JArray(
-                                    from s in p.passages
-                                    select new JObject(
-                                        new JProperty("type", s.type),
-                                        new JProperty("link", s.linkId),
-                                        new JProperty("description", s.description)
-
-                )))))));
-
-
-
             File.WriteAllText(filePath, rss.ToString());
+            return true;
+
         }
 
         public void Restore(string filePath)

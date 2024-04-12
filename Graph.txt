@@ -1,5 +1,5 @@
 {
-  "poolNumber": 378,
+  "poolNumber": 381,
   "views": [
     {
       "1": "Tree middle",
@@ -96,14 +96,6 @@
     {
       "1": "Room 315",
       "2": "Room 313"
-    },
-    {
-      "1": "Room 320",
-      "2": "Room 313"
-    },
-    {
-      "1": "Room 320",
-      "2": "Room 315"
     },
     {
       "1": "Og city window",
@@ -699,26 +691,6 @@
         {
           "type": 2,
           "link": "Room 336",
-          "description": null
-        },
-        {
-          "type": 3,
-          "link": "null",
-          "description": null
-        },
-        {
-          "type": 3,
-          "link": "null",
-          "description": null
-        },
-        {
-          "type": 3,
-          "link": "null",
-          "description": null
-        },
-        {
-          "type": 3,
-          "link": "null",
           "description": null
         },
         {
@@ -5093,7 +5065,7 @@
     },
     {
       "id": "Room 313",
-      "desc": null,
+      "desc": "",
       "size": 0,
       "passages": [
         {
