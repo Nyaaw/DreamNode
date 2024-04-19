@@ -80,7 +80,7 @@ namespace DreamNode.Register
                 return false;
             }
 
-            if (rss.Count < 100)
+            if (!rss.ContainsKey("pools") || rss["pools"].Count() < 100)
                 return false;
 
             if (File.Exists(filePath))

@@ -44,6 +44,8 @@ namespace DreamNode
         private PassageType? goToSubmenu = null;
         private int submenuPrestige = 0;
         private bool lookBack = false;
+
+
         public MainWindow()
         {
             engine = new Engine();
@@ -61,6 +63,9 @@ namespace DreamNode
             Refresh();
         }
 
+        /// <summary>
+        /// Updates UI.
+        /// </summary>
         public void Refresh()
         {
             this.PoolDescription.Text = active.desc;
@@ -75,63 +80,72 @@ namespace DreamNode
 
             GenerateOverview();
 
-
-//            if (goToSubmenu.HasValue)
-//            {
-//                var passages = active.GetPassages()[goToSubmenu.Value];
-
-            //                StringBuilder sb = new();
-            //                for (int i = 1; i < 9; i++)
-            //                {
-            //                    if (passages.Length == i)
-            //                    {
-            //                        sb.AppendLine();
-            //                        break;
-            //                    }
-
-            //                    sb.AppendLine($"{i}: {passages[i].link?.id ?? "none"}");
-            //                }
-
-
-            //                this.PoolPassagesOverview.Content = sb.ToString();
-            //            }
-
-            //            else
-            //            {
-            //                var passagesCount = active.PassageCount();
-            //                PassageType? oldDir = active.passages.Where(p => p.link != null && p.link == engine.old)?.FirstOrDefault()?.type;
-
-            //                string Decorate(PassageType type)
-            //                {
-            //                    if (oldDir == type)
-            //                        return $"[{passagesCount[type]}]";
-            //                    else
-            //                        return passagesCount[type].ToString();
-            //                }
-
-            //                this.PoolPassagesOverview.Content =
-            //$@"        {Decorate(PassageType.North)}
-
-            //{Decorate(PassageType.West)}                {Decorate(PassageType.East)}
-
-            //        {Decorate(PassageType.South)}
-
-            //Up: {Decorate(PassageType.Up)}
-            //Down: {Decorate(PassageType.Down)}
-
-            //Plus: {Decorate(PassageType.Plus)}";
-            //            }
-
-
-
         }
 
+
+        /// <summary>
+        /// handles changing tabs
+        /// </summary>
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count != 1)
+                return;
+            if (e.AddedItems[0] is not TabItem)
+                return;
+
+            TabItem t = (e.AddedItems[0] as TabItem)!;
+
+            if ((string)t.Header == "List")
+            {
+                resetDataGrid();
+
+                datagrid1.Items.Refresh();
+                datagrid2.Items.Refresh();
+
+                datagrid1.SelectedItem = active;
+            }
+            else if ((string)t.Header == "Register")
+            {
+                datagrid2.ItemsSource = null;
+                datagrid1.SelectedItem = null;
+                Refresh();
+            }
+            else if ((string)t.Header == "View")
+            {
+                Task.Run(LoadImage);
+            }
+        }
+
+
+        /// <summary>
+        /// Handles window closing
+        /// </summary>
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (engine.Save(saveFile))
+                return;
+            else
+            {
+                e.Cancel = true;
+                return;
+            }
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////
+        ///
+        ///     Main view / explore
+        ///
+        ////////////////////////////////////////////////////////////////////////////////////////
+
+        /// <summary>
+        /// Creates center ascii text showing the neighboring rooms
+        /// </summary>
         private void GenerateOverview()
         {
-            short wrapLength = 23;
-            short smallBoxHeight = 9;
-            short BigBoxHeight = 15;
-            short middleHeigth = 5;
+            const short wrapLength = 23;
+            const short smallBoxHeight = 9;
+            const short BigBoxHeight = 15;
+            const short middleHeigth = 5;
 
             var source = active.GetPassages();
 
@@ -223,130 +237,11 @@ namespace DreamNode
         }
 
 
-        private void GenerateView()
-        {
-
-            void writePool(StringBuilder sb, Pool p)
-            {
-                sb.Append("\"");
-                sb.Append(p.id);
-                sb.Append($"\"[width={Math.Pow(2, (int)p.size)}, height={Math.Pow(2, (int)p.size) * 0.7}]");
-                sb.AppendLine();
-            }
-
-            void writePassage(StringBuilder sb, Pool p, Passage a)
-            {
-                var q = p.id;
-                var w = a.type.ToString().First();
-                var e = a.linkId;
-                var r = a.link.passages.Find(x => x.link == p).type.ToString().First();
-
-                sb.AppendLine($"\"{q}\" -- \"{e}\" [taillabel = \"{w}\", headlabel = \"{r}\"]");
-                //sb.AppendLine($"\"{q}\":{w} -- \"{e}\":{r}");
-            }
-
-            StringBuilder sb = new();
-
-            sb.Append(@" // DreamNode
-
-strict graph ip_map {
-
-// settings
-node [
-fontsize = ""16""
-shape = ""box""
-];
-");
-
-
-            sb.AppendLine();
-            sb.AppendLine("//pools");
-
-            foreach (var p in engine.pools)
-            {
-                writePool(sb, p);
-            }
-
-            //Random rng = new Random();
-
-            //var shuffledpools = engine.pools.OrderBy(_ => rng.Next()).ToList();
-
-            HashSet<Tuple<Pool, Pool>> hashPassage = new();
-
-            sb.AppendLine();
-            sb.AppendLine("//passages");
-
-            int nullcount = 0;
-
-            foreach (var p in engine.pools)
-            {
-                foreach (var a in p.passages)
-                {
-                    if (a.link == null)
-                    {
-                        sb.AppendLine($"null{++nullcount} [shape = circle, label=\"\", width=0.12]");
-                        sb.AppendLine($"\"{p.id}\" -- null{nullcount} [taillabel=\"{a.type.ToString().First()}\"]");
-                        continue;
-                    }
-                        
-
-                    if (hashPassage.Any(t => t.Item1 == p && t.Item2 == a.link || t.Item2 == p && t.Item1 == a.link))
-                        continue;
-                    else
-                    {
-                        writePassage(sb, p, a);
-                        hashPassage.Add(new Tuple<Pool, Pool>(p, a.link));
-                    }
-                }
-            }
-
-            sb.AppendLine("//views");
-
-            foreach (var v in engine.views)
-            {
-                sb.AppendLine($"\"{v.Item1.id}\" -- \"{v.Item2.id}\" [style=dotted]");
-            }
-
-            sb.AppendLine("}");
-
-            File.WriteAllText("G:\\Documents\\Code\\DreamNode\\GraphVisu.txt", sb.ToString());
-
-            if (File.Exists(imageFile))
-                File.Delete(imageFile);
-
-            //engine.Save(saveFile);
-
-            Process process = new Process();
-            ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.WindowStyle = ProcessWindowStyle.Normal;
-            startInfo.FileName = "C:\\Program Files\\Graphviz\\bin\\dot.exe";
-            startInfo.WorkingDirectory = "G:\\Documents\\Code\\DreamNode";
-            startInfo.Arguments = $"-Tpng -o {imageFile} G:\\Documents\\Code\\DreamNode\\GraphVisu.txt";
-            startInfo.CreateNoWindow = true;
-
-
-
-            process.StartInfo = startInfo;
-            process.Start();
-            process.WaitForExit();
-
-        }
-
-        private void resetDataGrid()
-        {
-            var view = CollectionViewSource.GetDefaultView(datagrid1.ItemsSource);
-            view.SortDescriptions.Clear();
-
-            view.Filter = null;
-
-            searchInput.Text = null;
-
-            foreach (var column in datagrid1.Columns)
-            {
-                column.SortDirection = null;
-            }
-        }
-
+        /// <summary>
+        /// handle numeric inputs, or clicks on the numerical buttons
+        /// </summary>
+        /// <param name="x">Key pressed</param>
+        /// <param name="addPassage">false: go to room, true: create new room</param>
         private void NumInput(Key x, bool addPassage = false)
         {
 
@@ -419,6 +314,9 @@ shape = ""box""
             Refresh();
         }
 
+        /// <summary>
+        /// handles keyboard input
+        /// </summary>
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if ((tabMenu.SelectedItem as TabItem).Header.ToString() != "Register")
@@ -427,7 +325,7 @@ shape = ""box""
             var x = e.Key;
 
             if (x == Key.Enter || x == Key.Escape)
-                Keyboard.Focus(gridRegister);
+                Keyboard.Focus(tabMenu);
 
             if (PoolId.IsFocused || PoolDescription.IsFocused || multiInput.IsFocused)
             {
@@ -463,28 +361,18 @@ shape = ""box""
             Refresh();
         }
 
-        private void PoolDescription_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            active.desc = PoolDescription.Text;
-        }
-
+        /// <summary>
+        /// handles clicks on the virtual numeric keypad (the 9 buttons)
+        /// </summary>
         private void NewPassageClick(object sender, RoutedEventArgs e)
         {
             NumInput((Key)(74 + ((sender as Button).Name.Last() - '0')));
 
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            if (engine.Save(saveFile))
-                return;
-            else
-            {
-                e.Cancel = true;
-                return;
-            }
-        }
-
+        /// <summary>
+        /// handles changing the room name
+        /// </summary>
         private void PoolId_TextChanged(object sender, TextChangedEventArgs e)
         {
             active.id = PoolId.Text;
@@ -504,6 +392,19 @@ shape = ""box""
             Refresh();
         }
 
+        /// <summary>
+        /// handle changing description of room
+        /// </summary>
+        private void PoolDescription_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            active.desc = PoolDescription.Text;
+
+            //TODO: handle same name
+        }
+
+        /// <summary>
+        /// fusions two rooms into one
+        /// </summary>
         private void btnFusion_Click(object sender, RoutedEventArgs e)
         {
             if (multiInput.Text.Length == 0)
@@ -535,6 +436,9 @@ shape = ""box""
             Refresh();
         }
 
+        /// <summary>
+        /// adds a view between two rooms
+        /// </summary>
         private void btnAddView_Click(object sender, RoutedEventArgs e)
         {
             if (multiInput.Text.Length == 0)
@@ -548,6 +452,58 @@ shape = ""box""
             engine.views.Add(new Tuple<Pool, Pool>(active, view));
         }
 
+
+        /// <summary>
+        /// handles save button 
+        /// </summary>
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            this.IsEnabled = false;
+            bool x = engine.Save(saveFile);
+            this.IsEnabled = true;
+            Console.WriteLine(x);
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////
+        ///
+        ///     List view
+        ///
+        ////////////////////////////////////////////////////////////////////////////////////////
+
+
+        /// <summary>
+        /// handles filtering on room list
+        /// </summary>
+        private void searchInput_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var view = CollectionViewSource.GetDefaultView(datagrid1.ItemsSource);
+            view.SortDescriptions.Add(new System.ComponentModel.SortDescription("id", System.ComponentModel.ListSortDirection.Ascending));
+
+            view.Filter = (p) => (p as Pool).id.Contains((sender as TextBox).Text, StringComparison.CurrentCultureIgnoreCase);
+
+        }
+
+        /// <summary>
+        /// resets sorting and filtering of the room list grids
+        /// </summary>
+        private void resetDataGrid()
+        {
+            var view = CollectionViewSource.GetDefaultView(datagrid1.ItemsSource);
+            view.SortDescriptions.Clear();
+
+            view.Filter = null;
+
+            searchInput.Text = null;
+
+            foreach (var column in datagrid1.Columns)
+            {
+                column.SortDirection = null;
+            }
+        }
+
+        /// <summary>
+        /// Updates right grid (in room list) according to selection in left grid
+        /// </summary>
         private void datagrid1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count != 1)
@@ -558,36 +514,46 @@ shape = ""box""
             datagrid2.Items.Refresh();
         }
 
-        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+
+        /// <summary>
+        /// teleports to the double clicked room in room list
+        /// </summary>
+        private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (e.AddedItems.Count != 1)
-                return;
-            if (e.AddedItems[0] is not TabItem)
-                return;
+            var data = (sender as DataGridRow).DataContext;
 
-            TabItem t = (e.AddedItems[0] as TabItem)!;
-
-            if ((string)t.Header == "List")
+            if (data is Pool)
+                engine.GoTo(data as Pool, true);
+            else if (data is Passage)
             {
-                resetDataGrid();
+                if ((data as Passage).link == null)
+                    return;
 
-                datagrid1.Items.Refresh();
-                datagrid2.Items.Refresh();
+                engine.GoTo((data as Passage).link, true);
+            }
 
-                datagrid1.SelectedItem = active;
-            }
-            else if ((string)t.Header == "Register")
-            {
-                datagrid2.ItemsSource = null;
-                datagrid1.SelectedItem = null;
-                Refresh();
-            }
-            else if ((string)t.Header == "View")
-            {
-                Task.Run(LoadImage);
-            }
+            Dispatcher.BeginInvoke((Action)(() => tabMenu.SelectedIndex = 1));
+            // Some operations with this row
         }
 
+        /// <summary>
+        /// calls resetDataGrid() when button reset pressed
+        /// </summary>
+        private void btnReset_Click(object sender, RoutedEventArgs e)
+        {
+            resetDataGrid();
+        }
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////
+        ///
+        ///     Graph
+        ///
+        ////////////////////////////////////////////////////////////////////////////////////////
+
+        /// <summary>
+        /// load image in async. Calls GenerateView()
+        /// </summary>
         private async Task LoadImage()
         {
             ReloadStatus.Dispatcher.Invoke(() =>
@@ -610,6 +576,126 @@ shape = ""box""
             });
         }
 
+
+        /// <summary>
+        /// Generates the graph view.
+        /// </summary>
+        private void GenerateView()
+        {
+
+            void writePool(StringBuilder sb, Pool p)
+            {
+                sb.Append("\"");
+                sb.Append(p.id);
+                sb.Append($"\"[width={Math.Pow(2, (int)p.size)}, height={Math.Pow(2, (int)p.size) * 0.7}]");
+                sb.AppendLine();
+            }
+
+            void writePassage(StringBuilder sb, Pool p, Passage a)
+            {
+                var q = p.id;
+                var w = a.type.ToString().First();
+                var e = a.linkId;
+
+                if (!a.link.passages.Any(x => x.link == p))
+                    Console.Write("dfsuiy");
+
+                var r = a.link.passages.Find(x => x.link == p).type.ToString().First();
+
+                sb.AppendLine($"\"{q}\" -- \"{e}\" [taillabel = \"{w}\", headlabel = \"{r}\"]");
+                //sb.AppendLine($"\"{q}\":{w} -- \"{e}\":{r}");
+            }
+
+            StringBuilder sb = new();
+
+            sb.Append(@" // DreamNode
+
+strict graph ip_map {
+
+// settings
+node [
+fontsize = ""16""
+shape = ""box""
+];
+");
+
+
+            sb.AppendLine();
+            sb.AppendLine("//pools");
+
+            foreach (var p in engine.pools)
+            {
+                writePool(sb, p);
+            }
+
+            //Random rng = new Random();
+
+            //var shuffledpools = engine.pools.OrderBy(_ => rng.Next()).ToList();
+
+            HashSet<Tuple<Pool, Pool>> hashPassage = new();
+
+            sb.AppendLine();
+            sb.AppendLine("//passages");
+
+            int nullcount = 0;
+
+            foreach (var p in engine.pools)
+            {
+                foreach (var a in p.passages)
+                {
+                    if (a.link == null)
+                    {
+                        sb.AppendLine($"null{++nullcount} [shape = circle, label=\"\", width=0.12]");
+                        sb.AppendLine($"\"{p.id}\" -- null{nullcount} [taillabel=\"{a.type.ToString().First()}\"]");
+                        continue;
+                    }
+
+
+                    if (hashPassage.Any(t => t.Item1 == p && t.Item2 == a.link || t.Item2 == p && t.Item1 == a.link))
+                        continue;
+                    else
+                    {
+                        writePassage(sb, p, a);
+                        hashPassage.Add(new Tuple<Pool, Pool>(p, a.link));
+                    }
+                }
+            }
+
+            sb.AppendLine("//views");
+
+            foreach (var v in engine.views)
+            {
+                sb.AppendLine($"\"{v.Item1.id}\" -- \"{v.Item2.id}\" [style=dotted]");
+            }
+
+            sb.AppendLine("}");
+
+            File.WriteAllText("G:\\Documents\\Code\\DreamNode\\GraphVisu.txt", sb.ToString());
+
+            if (File.Exists(imageFile))
+                File.Delete(imageFile);
+
+            //engine.Save(saveFile);
+
+            Process process = new Process();
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.WindowStyle = ProcessWindowStyle.Normal;
+            startInfo.FileName = "C:\\Program Files\\Graphviz\\bin\\dot.exe";
+            startInfo.WorkingDirectory = "G:\\Documents\\Code\\DreamNode";
+            startInfo.Arguments = $"-Tpng -o {imageFile} G:\\Documents\\Code\\DreamNode\\GraphVisu.txt";
+            startInfo.CreateNoWindow = true;
+
+
+
+            process.StartInfo = startInfo;
+            process.Start();
+            process.WaitForExit();
+
+        }
+
+        /// <summary>
+        /// handles panning the graph view
+        /// </summary>
         private void graphImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (graphImage.IsMouseCaptured) return;
@@ -620,11 +706,17 @@ shape = ""box""
             origin.Y = graphImage.RenderTransform.Value.OffsetY;
         }
 
+        /// <summary>
+        /// handles panning the graph view
+        /// </summary>
         private void graphImage_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             graphImage.ReleaseMouseCapture();
         }
 
+        /// <summary>
+        /// handles panning the graph view
+        /// </summary>
         private void graphImage_MouseMove(object sender, MouseEventArgs e)
         {
             if (!graphImage.IsMouseCaptured) return;
@@ -637,6 +729,9 @@ shape = ""box""
             graphImage.RenderTransform = new MatrixTransform(m);
         }
 
+        /// <summary>
+        /// handles zooming in graph view
+        /// </summary>
         private void graphImage_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             Point p = e.MouseDevice.GetPosition(graphImage);
@@ -649,51 +744,5 @@ shape = ""box""
 
             graphImage.RenderTransform = new MatrixTransform(m);
         }
-
-        private void btnSave_Click(object sender, RoutedEventArgs e)
-        {
-            this.IsEnabled = false;
-            bool x = engine.Save(saveFile);
-            this.IsEnabled = true;
-            Console.WriteLine(x);
-        }
-
-        private void searchInput_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            var view = CollectionViewSource.GetDefaultView(datagrid1.ItemsSource);
-            view.SortDescriptions.Add(new System.ComponentModel.SortDescription("id", System.ComponentModel.ListSortDirection.Ascending));
-
-            view.Filter = (p) => (p as Pool).id.Contains((sender as TextBox).Text, StringComparison.CurrentCultureIgnoreCase);
-
-
-            //foreach (var column in datagrid1.Columns)
-            //{
-            //    column.SortDirection = null;
-            //}
-        }
-
-        private void btnReset_Click(object sender, RoutedEventArgs e)
-        {
-            resetDataGrid();
-        }
-
-        private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            var data = (sender as DataGridRow).DataContext;
-
-            if(data is Pool)
-                engine.GoTo(data as Pool, true);
-            else if (data is Passage)
-            {
-                if ((data as Passage).link == null)
-                    return;
-
-                engine.GoTo((data as Passage).link, true);
-            }
-
-            Dispatcher.BeginInvoke((Action)(() => tabMenu.SelectedIndex = 1));
-            // Some operations with this row
-        }
-
     } 
 }
