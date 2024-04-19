@@ -5936,6 +5936,16 @@
           "type": 3,
           "link": "Room 387",
           "description": null
+        },
+        {
+          "type": 1,
+          "link": "Church south",
+          "description": null
+        },
+        {
+          "type": 3,
+          "link": "Church east A",
+          "description": null
         }
       ]
     },
@@ -6080,6 +6090,16 @@
           "type": 0,
           "link": "Room 396",
           "description": null
+        },
+        {
+          "type": 2,
+          "link": "Cloud crossroad",
+          "description": null
+        },
+        {
+          "type": 3,
+          "link": "PRGCGPR",
+          "description": null
         }
       ]
     },
@@ -6130,6 +6150,11 @@
         {
           "type": 1,
           "link": "null",
+          "description": null
+        },
+        {
+          "type": 3,
+          "link": "Radio pick 3",
           "description": null
         }
       ]
@@ -6245,18 +6270,7 @@
       "id": "Room 386",
       "desc": null,
       "size": 1,
-      "passages": [
-        {
-          "type": 1,
-          "link": "Church south",
-          "description": null
-        },
-        {
-          "type": 3,
-          "link": "Church east A",
-          "description": null
-        }
-      ]
+      "passages": []
     },
     {
       "id": "Church east A",
@@ -6391,18 +6405,7 @@
       "id": "Room 395",
       "desc": null,
       "size": 0,
-      "passages": [
-        {
-          "type": 2,
-          "link": "Cloud crossroad",
-          "description": null
-        },
-        {
-          "type": 3,
-          "link": "PRGCGPR",
-          "description": null
-        }
-      ]
+      "passages": []
     },
     {
       "id": "PRGCGPR",
@@ -6442,13 +6445,7 @@
       "id": "Room 401",
       "desc": null,
       "size": 0,
-      "passages": [
-        {
-          "type": 3,
-          "link": "Radio pick 3",
-          "description": null
-        }
-      ]
+      "passages": []
     }
   ]
 }
