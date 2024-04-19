@@ -84,12 +84,11 @@
                     <Label x:Name="status" Content="" HorizontalAlignment="Left" Margin="858,504,0,0" VerticalAlignment="Top"/>
                     <TextBox x:Name="PoolDescription" HorizontalAlignment="Right" Margin="0,94,8,0" TextWrapping="Wrap" Width="263" TextChanged="PoolDescription_TextChanged" IsTabStop="False" Height="365" VerticalAlignment="Top"/>
                     <TextBox x:Name="PoolId" HorizontalAlignment="Left" Height="40" Margin="214,34,0,0" VerticalAlignment="Top" Width="243" FontSize="20" TextChanged="PoolId_TextChanged" IsTabStop="False"/>
-                    <ComboBox x:Name="multiInput" Margin="0,14,10,0" Width="261" IsTabStop="False" HorizontalAlignment="Right" VerticalContentAlignment="Center" VerticalAlignment="Top" Height="26">
+                    <ComboBox x:Name="multiInput" IsEditable="True" IsTextSearchEnabled="False" Margin="0,14,10,0" Width="261" IsTabStop="False" HorizontalAlignment="Right" VerticalContentAlignment="Center" VerticalAlignment="Top" Height="26">
                         <ComboBox.ItemContainerStyle>
                             <Style TargetType="ComboBoxItem">
                                 <Setter Property="HorizontalContentAlignment" Value="Left" />
                                 <Setter Property="VerticalContentAlignment" Value="Center" />
-                                <!--<Setter Property="OverridesDefaultStyle" Value="True"/>-->
                             </Style>
                         </ComboBox.ItemContainerStyle>
                     </ComboBox>
@@ -98,6 +97,24 @@
                     <Button x:Name="btnSave" Content="Save" Margin="0,0,12,10" Click="btnSave_Click" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="60" TabIndex="4"/>
                     <Button x:Name="btnAddView" Content="Add view" HorizontalAlignment="Right" Margin="0,48,10,0" VerticalAlignment="Top" Height="26" Width="70" Click="btnAddView_Click" TabIndex="3"/>
                     <Label Content="Description:" HorizontalAlignment="Right" Height="30" Margin="0,72,194,0" VerticalAlignment="Top" Width="80" IsTabStop="False"/>
+                    <ComboBox x:Name="startInput" IsEditable="True" IsTextSearchEnabled="False" Margin="0,473,12,0" Width="254" IsTabStop="False" HorizontalAlignment="Right" VerticalContentAlignment="Center" VerticalAlignment="Top" Height="26">
+                        <ComboBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ComboBoxItem}">
+                                <Setter Property="HorizontalContentAlignment" Value="Left" />
+                                <Setter Property="VerticalContentAlignment" Value="Center" />
+                            </Style>
+                        </ComboBox.ItemContainerStyle>
+                    </ComboBox>
+                    <ComboBox x:Name="finishInput" IsEditable="True" IsTextSearchEnabled="False" Margin="0,517,13,0" Width="254" IsTabStop="False" HorizontalAlignment="Right" VerticalContentAlignment="Center" VerticalAlignment="Top" Height="26">
+                        <ComboBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ComboBoxItem}">
+                                <Setter Property="HorizontalContentAlignment" Value="Left" />
+                                <Setter Property="VerticalContentAlignment" Value="Center" />
+                            </Style>
+                        </ComboBox.ItemContainerStyle>
+                    </ComboBox>
+                    <Button x:Name="btnRoute" Content="Trace route" Margin="0,569,119,0" Height="30" VerticalAlignment="Top" HorizontalAlignment="Right" Width="94" TabIndex="4" Click="btnRoute_Click"/>
+                    <Button x:Name="btnClearRoute" Content="Clear" Margin="0,569,10,0" Height="30" VerticalAlignment="Top" HorizontalAlignment="Right" Width="94" TabIndex="4" Click="btnClearRoute_Click"/>
                 </Grid>
             </TabItem>
             <TabItem Header="View">

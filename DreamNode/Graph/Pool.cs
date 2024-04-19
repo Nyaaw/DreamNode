@@ -17,6 +17,7 @@ namespace DreamNode.Graph
     public class Pool
     {
         public static int id_count;
+        internal Pool route;
 
         public string id { get; set; }
 
@@ -30,6 +31,11 @@ namespace DreamNode.Graph
         public Pool() : this($"Room {id_count++}")
         { 
 
+        }
+
+        public string ToString()
+        {
+            return id;
         }
 
         public Pool(string id)

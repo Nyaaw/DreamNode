@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -45,6 +46,7 @@ namespace DreamNode
         private int submenuPrestige = 0;
         private bool lookBack = false;
 
+        private bool route = false;
 
         public MainWindow()
         {
@@ -57,8 +59,16 @@ namespace DreamNode
 
             InitializeComponent();
 
-            datagrid1.ItemsSource = engine.pools;
+            multiInput.MakeComboBoxSearchable();
+            startInput.MakeComboBoxSearchable();
+            finishInput.MakeComboBoxSearchable();
+
             multiInput.ItemsSource = engine.pools.Select(p => p.id);
+            startInput.ItemsSource = engine.pools.Select(p => p.id);
+            finishInput.ItemsSource = engine.pools.Select(p => p.id);
+
+            datagrid1.ItemsSource = engine.pools;
+
 
             Refresh();
         }
@@ -361,6 +371,83 @@ namespace DreamNode
             Refresh();
         }
 
+
+        private void btnRoute_Click(object sender, RoutedEventArgs e)
+        {
+            if (startInput.Text == "" || finishInput.Text == "")
+                return;
+
+
+            Pool root = engine.pools.Find(p => p.id == startInput.Text);
+            Pool goal = engine.pools.Find(p => p.id == finishInput.Text);
+
+            if (root == null || goal == null)
+                return;
+
+            Queue<Pool> Q = new();
+            HashSet<Pool> explored = new();
+
+            Q.Enqueue(root);
+
+            Pool v;
+
+            while (Q.Count != 0)
+            {
+                v = Q.Dequeue();
+                if (v == goal)
+                    break;
+
+                foreach(Pool w in v.passages.Select(p => p.link))
+                {
+                    if (w == null)
+                        continue;
+
+                    if (!explored.Contains(w))
+                    {
+                        explored.Add(w);
+                        w.route = v;
+                        Q.Enqueue(w);
+                    }
+                }   
+            }
+
+            if (Q.Count == 0)
+                return;
+
+            explored.Clear();
+            v = goal;
+
+            while(true)
+            {
+                Debug.WriteLine(v.id);
+                explored.Add(v);
+                if(v.route == root)
+                {
+                    root.route = v;
+                    explored.Add(root);
+                    break;
+                }
+                v = v.route;
+            }
+
+            foreach (Pool p in engine.pools.Except(explored))
+                p.route = null;
+
+            tabMenu.SelectedIndex = 2;
+
+            route = true;
+        }
+
+        private void btnClearRoute_Click(object sender, RoutedEventArgs e)
+        {
+            if (route)
+            {
+                foreach (Pool p in engine.pools)
+                    p.route = null;
+                route = false;
+            }
+        }
+
         /// <summary>
         /// handles clicks on the virtual numeric keypad (the 9 buttons)
         /// </summary>
@@ -587,7 +674,7 @@ namespace DreamNode
             {
                 sb.Append("\"");
                 sb.Append(p.id);
-                sb.Append($"\"[width={Math.Pow(2, (int)p.size)}, height={Math.Pow(2, (int)p.size) * 0.7}]");
+                sb.Append($"\"[width={Math.Pow(2, (int)p.size)}, height={Math.Pow(2, (int)p.size) * 0.7} {(p.route != null ? ", color = red" : "")}]");
                 sb.AppendLine();
             }
 
@@ -596,13 +683,17 @@ namespace DreamNode
                 var q = p.id;
                 var w = a.type.ToString().First();
                 var e = a.linkId;
+                bool isRoute = false;
 
                 if (!a.link.passages.Any(x => x.link == p))
                     Console.Write("dfsuiy");
 
                 var r = a.link.passages.Find(x => x.link == p).type.ToString().First();
 
-                sb.AppendLine($"\"{q}\" -- \"{e}\" [taillabel = \"{w}\", headlabel = \"{r}\"]");
+                if (p.route == a.link || a.link.route == p)
+                    isRoute = true;
+
+                sb.AppendLine($"\"{q}\" -- \"{e}\" [taillabel = \"{w}\", headlabel = \"{r}\" {(isRoute ? ", color = red, labelfontcolor = red" : "")}]");
                 //sb.AppendLine($"\"{q}\":{w} -- \"{e}\":{r}");
             }
 
