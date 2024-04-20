@@ -1,3 +1,3 @@
 # DreamNode
-## Map (W.I.P)
+## Complete Map (DreamCore Demo)
 ![](Graph.png)
