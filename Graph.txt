@@ -1,5 +1,5 @@
 {
-  "poolNumber": 451,
+  "poolNumber": 457,
   "views": [
     {
       "1": "Tree middle",
@@ -120,6 +120,10 @@
     {
       "1": "Room 445",
       "2": "Inside room with pillars"
+    },
+    {
+      "1": "Snake green slide",
+      "2": "Talk to me"
     }
   ],
   "pools": [
@@ -1034,7 +1038,7 @@
         },
         {
           "type": 2,
-          "link": "null",
+          "link": "Room 453",
           "description": null
         }
       ]
@@ -2087,7 +2091,7 @@
         },
         {
           "type": 1,
-          "link": "null",
+          "link": "Snake green slide",
           "description": null
         },
         {
@@ -3742,7 +3746,7 @@
     },
     {
       "id": "Snake green slide",
-      "desc": null,
+      "desc": "Stairs inside",
       "size": 2,
       "passages": [
         {
@@ -3762,14 +3766,14 @@
         },
         {
           "type": 2,
-          "link": "null",
+          "link": "Room 120",
           "description": null
         }
       ]
     },
     {
       "id": "Room 222",
-      "desc": null,
+      "desc": "",
       "size": 0,
       "passages": [
         {
@@ -4802,7 +4806,7 @@
         },
         {
           "type": 2,
-          "link": "null",
+          "link": "Church north",
           "description": null
         },
         {
@@ -4840,13 +4844,13 @@
           "description": null
         },
         {
-          "type": 3,
-          "link": "null",
+          "type": 2,
+          "link": "Room 300",
           "description": null
         },
         {
-          "type": 2,
-          "link": "Room 300",
+          "type": 3,
+          "link": "Big crossroad B",
           "description": null
         }
       ]
@@ -6552,7 +6556,7 @@
         },
         {
           "type": 3,
-          "link": "null",
+          "link": "Room 455",
           "description": null
         }
       ]
@@ -6891,6 +6895,57 @@
         {
           "type": 3,
           "link": "Room 447",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Room 453",
+      "desc": null,
+      "size": 0,
+      "passages": [
+        {
+          "type": 3,
+          "link": "City crossroad",
+          "description": null
+        },
+        {
+          "type": 2,
+          "link": "Room 454",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Room 454",
+      "desc": null,
+      "size": 0,
+      "passages": [
+        {
+          "type": 3,
+          "link": "Room 453",
+          "description": null
+        },
+        {
+          "type": 0,
+          "link": "Room 455",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "Room 455",
+      "desc": null,
+      "size": 0,
+      "passages": [
+        {
+          "type": 1,
+          "link": "Room 454",
+          "description": null
+        },
+        {
+          "type": 2,
+          "link": "3 Way corridor",
           "description": null
         }
       ]

@@ -714,14 +714,16 @@ shape = ""box""
             sb.AppendLine();
             sb.AppendLine("//pools");
 
-            foreach (var p in engine.pools)
+            //Random rng = new Random();
+
+            //var shuffledpools = engine.pools.OrderBy(_ => rng.Next()).ToList();
+
+            //foreach (var p in shuffledpools)
+            foreach (Pool p in engine.pools)
             {
                 writePool(sb, p);
             }
 
-            //Random rng = new Random();
-
-            //var shuffledpools = engine.pools.OrderBy(_ => rng.Next()).ToList();
 
             HashSet<Tuple<Pool, Pool>> hashPassage = new();
 
@@ -730,7 +732,8 @@ shape = ""box""
 
             int nullcount = 0;
 
-            foreach (var p in engine.pools)
+            //foreach (var p in shuffledpools)
+            foreach (Pool p in engine.pools)
             {
                 foreach (var a in p.passages)
                 {
